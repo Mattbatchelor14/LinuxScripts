@@ -1,0 +1,54 @@
+For a new Linux Machine use:
+
+	git clone https://github.com/letsencrypt/letsencrypt
+
+On an exsisting ubuntu vm with the letsencrypt git installed use:
+
+	sudo bash - (to run in admin mode)
+	cd .. until you are at root
+	cd to the installed directory (normally /home/username/letsencrypt)
+
+Run the following with the domain modified to the correct domain
+	
+	./letsencrypt-auto certonly -a manual --rsa-key-size 4096 -d insertdomain.co.uk -d www.insertdomain.co.uk
+	
+Follow the instruction provided 
+		
+		This will involve creating a .well-known\acme-challenge in the root of the domain public_html\domainname.com
+		Save the files with the names as instructed with the content as instructed
+		
+Once you have verified the domain do the following:
+
+	cd .. until at root
+	cd etc\letsencrypt\live\domainname
+	Type DIR and you will see the following:
+	
+		cert.pem:			This is the domain cert requested by your provider
+		privatekey.pem: 	This is the private key requested by your provider
+		chain.pem:			This is the certificate Authority Bundle requested by your provider
+
+
+
+
+Additional Notes:
+
+Certificate (CRT) is cert.pem
+Private Key is privkey.pem
+Certificate Authority Bundle: (CABUNDLE) or CA is chain.pem
+
+HT Access File Config
+
+Save this file at the root of the web dir as .htaccess
+
+# BEGIN Force SSL
+# This should be the first rule before other rules
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
+</IfModule>
+# END Force SSL
+
+
+
