@@ -50,5 +50,8 @@ Save this file at the root of the web dir as .htaccess
 </IfModule>
 # END Force SSL
 
+REF: https://www.kosinix.com/install-lets-encrypt-certificate-on-shared-hosting/
+
+
 
 
